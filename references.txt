@@ -1,0 +1,25 @@
+https://betterprogramming.pub/how-to-visualize-time-series-data-in-javascript-with-chart-js-and-influxdb-7e0a9496d77e
+
+// Get the current date
+const today = new Date();
+
+// Create an array to hold the labels
+const labels = [];
+
+// Loop 31 times to get the labels for the past 31 days
+for (let i = 0; i < 31; i++) {
+  // Get the date for i days ago
+  const date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - i);
+
+  // Format the date as a string in "YYYY-MM-DD" format
+  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+
+  // Add the formatted date to the labels array
+  labels.push(formattedDate);
+}
+
+// Print the labels to the console
+console.log(labels);
+
+
+const myLineChart = new Chart(document.getElementById('lineChart'), config_line);

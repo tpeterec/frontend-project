@@ -1,5 +1,6 @@
 let $body = $("body");
 let $results = $("#results");
+
 // accessing the body of the document constantly. Will not change
 const summary = {
   Bitcoin:
@@ -77,9 +78,11 @@ function parseData(data) {
             $results.append($resultcard);
           }
         );
-        // console.log(
-        //   $.get(`https://api.coinbase.com/v2/prices/BTC-USD/historic?days=76`)
-        // );
+      
+          $.get(`https://api.coinbase.com/v2/prices/BTC-USD/historic?days=76`, (historyData) => {
+            console.log(historyData)
+          }
+        );
       }
     }
   }
@@ -103,3 +106,50 @@ $("#select").change(function () {
   }
 });
 
+function makeLabels(){
+  // Get the current date
+const today = new Date();
+
+// Create an array to hold the labels
+const labels = [];
+
+// Loop 31 times to get the labels for the past 31 days
+for (let i = 0; i < 31; i++) {
+  // Get the date for i days ago
+  const date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - i);
+
+  // Format the date as a string in "YYYY-MM-DD" format
+  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+
+  // Add the formatted date to the labels array
+  labels.push(formattedDate);
+}
+
+// Print the labels to the console
+return labels;
+}
+let myDates = makeLabels()
+myDates = myDates.sort((a, b) => new Date(b.date) - new Date(a.date))
+console.log(myDates)
+
+const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: makeLabels(),
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
