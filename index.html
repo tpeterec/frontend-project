@@ -14,24 +14,54 @@
     ></script>
   </head>
   <body>
-    <div id = 'header'>
-      <h1>Top Crypto Currencies</h1>
-    </div>
-    <div style="text-align: center;">
-      <h1>Current Currency:</h1>
-      <select id="select">
-        <option value ="Choose">View All</option>
-        <option value ="Bitcoin">Bitcoin</option>
-        <option value ="Ethereum">Ethereum</option>
-        <option value ="Tether">Tether</option>
-        <option value="USD Coin">USD Coin</option>
-        <option value="Cardano">Cardano</option>
-        <option value ="Polygon">Polygon</option>
-        <option value ="Dogecoin">Dogecoin</option>
-        <option value ="Binance USD">Binance USD</option>
-    </select>
-  </div>
-    <div id = 'results'>
-    </div>
+      <div id = 'header' style="text-align: center" class='pricedown'>
+        <h1 class="titletext">Top Crypto Currencies</h1>
+      </div>
+      <div class = "titlephoto"></div>
+      <div style="text-align: center;">
+        <h2 id ='title'></h2>
+        <select id="select">
+          <option value ="Choose">View All</option>
+          <option value ="Bitcoin">Bitcoin</option>
+          <option value ="Ethereum">Ethereum</option>
+          <option value ="Tether">Tether</option>
+          <option value="USD Coin">USD Coin</option>
+          <option value="Cardano">Cardano</option>
+          <option value ="Polygon">Polygon</option>
+          <option value ="Dogecoin">Dogecoin</option>
+          <option value ="Binance USD">Binance USD</option>
+        </select>
+      </div>
+    <div id = 'results' style ="text-align: center;"></div>
+    
  </body>
+ <div class = 'container'>
+  <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
 </html>

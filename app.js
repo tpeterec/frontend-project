@@ -51,54 +51,55 @@ function parseData(data) {
   for (let i = 0; i < 253; i++) {
     for (let j = 0; j < topEightCode.length; j++) {
       if (topEightCode[j] === data.data[i].code) {
-        console.log(data.data[i]);
-        console.log(true);
         $.get(
           `https://api.coinbase.com/v2/prices/${data.data[i].code}-USD/spot`,
           (priceData) => {
-            console.log(priceData);
             let coin = data.data[i];
             let $resultcard = $('<div class ="resultcard" ></div>');
             let $h2 = $(`<h2 class = "Cryptocurrency_Name">${coin.name}</h2>`);
             let $h3 = $(
-              `<h3 class = "Cryptocurrency Ticker">${coin.code}</h3>`
+              `<h3 class = "Cryptocurrency Ticker">Ticker: ${coin.code}</h3>`
             );
             let $h4 = $(
-              `<h4 class = "Crypto Price">${priceData.data.amount}</h4>`
+              `<h4 class = "Crypto Price">Current Spot Price in USD: $${priceData.data.amount}</h4>`
             );
             let $summary = $(
-              `<div class="card-summmary">${summary[coin.name]}</div>`
+              `<div class="card-summmary">About: ${
+                summary[coin.name]
+              } Below is the spot price of ${
+                coin.name
+              } for the past year.</div>`
             );
             $h4.append($summary);
-            // let $em = $(`<em>Summary:</em>`);
-            //
-            // let $p = $(`<p></p>`);
             $resultcard.append($h2);
             $resultcard.append($h3);
             $resultcard.append($h4);
             $results.append($resultcard);
           }
         );
+        // console.log(
+        //   $.get(`https://api.coinbase.com/v2/prices/BTC-USD/historic?days=76`)
+        // );
       }
     }
   }
 }
 
-// let $cryptoName = $(".Cryptocurrency_Name");
-// $cryptoName.each(function (){
-//   console.log($(this).val());
-// })
-
 $("#select").change(function () {
   $(".resultcard").show();
-  console.log($(this).val());
   let targetName = $(this).val();
-  //console.log($results.children());
   for (let k = 0; k < $results.children().length; k++) {
-    console.log($($results.children()[k]).find(".Cryptocurrency_Name").text());
-    let cardName = $($results.children()[k]).find(".Cryptocurrency_Name").text();
-    if (targetName !== cardName){
-        $($results.children()[k]).hide();
+    //console.log($($results.children()[k]).find(".Cryptocurrency_Name").text());
+    let cardName = $($results.children()[k])
+      .find(".Cryptocurrency_Name")
+      .text();
+    if (targetName === cardName) {
+      $("#title").empty();
+      $("#title").append(`Current Currency: ${cardName}`);
+    }
+    if (targetName !== cardName) {
+      $($results.children()[k]).hide();
     }
   }
 });
+
